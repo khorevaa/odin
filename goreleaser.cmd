@@ -1,0 +1,1 @@
+docker run --rm --privileged --env licensed="TheDemonCat" --env ACCESS_TOKEN=%ACCESS_TOKEN% -v %cd%:/go/src/khorevaa/app -v /var/run/docker.sock:/var/run/docker.sock -w /go/src/khorevaa/app goreleaser/goreleaser:latest release --snapshot --skip-publish --rm-dist

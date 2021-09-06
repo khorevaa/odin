@@ -1,0 +1,47 @@
+
+###
+GET http://localhost:3001/api/v1/app
+Content-Type: application/json
+
+###
+GET http://localhost:3001/api/v1/health
+Content-Type: application/json
+
+###
+GET http://localhost:3001/api/v1/health/readiness
+Content-Type: application/json
+
+###
+POST http://localhost:3001/api/v1/app
+Content-Type: application/json
+
+{
+  "addr": "{{server}}",
+  "agent_pwd": "",
+  "agent_usr": "",
+  "name": "test2",
+  "port": "1545",
+  "status": "",
+  "version": "10.0"
+}
+
+
+###
+###
+GET http://localhost:3001/api/v1/app/test/clusters?force=true
+Accept: application/json
+###
+###
+GET http://localhost:3001/api/v1/app/test2/clusters?force=true
+Accept: application/json
+
+
+###
+###
+GET http://localhost:3001/api/v1/app/test2/agent/version
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/test/agent/admins
+Accept: application/json

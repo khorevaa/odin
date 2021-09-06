@@ -1,0 +1,19 @@
+on: [push, pull_request]
+name: Security
+jobs:
+  Gosec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Repository
+        uses: actions/checkout@v2
+      - name: Granting private modules access
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          go env -w GOPRIVATE=github.com/khorevaa/ras-client
+          git config --global url."https://khorevaa:${ACCESS_TOKEN}@github.com/khorevaa/".insteadOf "https://github.com/khorevaa/"
+          go mod tidy
+          - name: Run Gosec
+        uses: securego/gosec@master
+        with:
+          args: ./...

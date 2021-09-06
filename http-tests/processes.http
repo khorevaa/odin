@@ -1,0 +1,11 @@
+###
+GET http://localhost:3001/api/v1/app/test/processes
+Content-Type: application/json
+Accept: application/json
+
+> {% client.global.set("process_id", response.body.data[0].UUID); %}
+
+###
+GET http://localhost:3001/api/v1/app/test/processes/{{process_id}}
+Accept: application/json
+

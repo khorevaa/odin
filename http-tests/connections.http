@@ -1,0 +1,59 @@
+###
+GET http://localhost:3001/api/v1/app/test/connections
+Content-Type: application/json
+Accept: application/json
+
+> {%
+
+client.global.set("connections_id", response.body.data[0].UUID);
+client.global.set("process_id", response.body.data[0].Process);
+
+%}
+
+###
+DELETE http://localhost:3001/api/v1/app/test2/connections/{{connections_id}}.{{process_id}}
+Accept: application/json
+
+
+###
+POST http://localhost:3001/api/v1/app/test2/connections/terminate
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Connections": [
+    {
+      "UUID": "48abcb1a-6cab-418b-a33a-959eb8e46704",
+      "ID": 0,
+      "Host": "srv",
+      "Process": "6b992fa6-e411-46ad-ac84-061578def4b5",
+      "ClusterID": "80f7f2f6-2feb-46bf-92f4-19294a2f5dc7",
+      "InfobaseID": "00000000-0000-0000-0000-000000000000",
+      "Application": "JobScheduler",
+      "ConnectedAt": "2020-10-24T23:09:01+03:00",
+      "SessionID": 0,
+      "BlockedByLs": 0
+    },
+    {
+      "UUID": "d82e07a7-fb1b-4765-9608-c873741f2b11",
+      "ID": 0,
+      "Host": "srv",
+      "Process": "6b992fa6-e411-46ad-ac84-061578def4b5",
+      "ClusterID": "80f7f2f6-2feb-46bf-92f4-19294a2f5dc7",
+      "InfobaseID": "00000000-0000-0000-0000-000000000000",
+      "Application": "AgentStandardCall",
+      "ConnectedAt": "2020-10-24T14:21:50+03:00",
+      "SessionID": 0,
+      "BlockedByLs": 0
+    }
+  ]
+}
+
+###
+POST http://localhost:3001/api/v1/app/test2/connections/terminate
+Accept: application/json
+Content-Type: application/json
+
+{
+  "InfobaseID": "testdb"
+}

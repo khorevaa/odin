@@ -1,0 +1,51 @@
+###
+GET http://localhost:3001/api/v1/app/test2/infobases/testdb2/block
+    ?infobase=testdb2
+    &permission-code=123
+    &sessions-deny=true
+    &denied-to=2020-10-01T08:30:00Z
+Accept: application/json
+
+###
+POST http://localhost:3001/api/v1/app/test2/block
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Infobase": "testdb2",
+  "ClusterID": "80f7f2f6-2feb-46bf-92f4-19294a2f5dc7",
+  "PermissionCode": "123",
+  "ScheduledJobsDeny": true,
+  "SessionsDeny": true,
+  "DeniedTo": "2020-10-01T08:30:00Z"
+}
+
+###
+GET http://localhost:3001/api/v1/app/test2/infobases/testdb2
+Accept: application/json
+
+
+###
+POST http://localhost:3001/api/v1/app/test2/infobases/testdb2/unblock
+Content-Type: application/json
+Accept: application/json
+
+{
+    "InfobaseID": "b37f86f4-5d4c-4d97-9c93-e3f1b4d0e3a8",
+    "ClusterID": "80f7f2f6-2feb-46bf-92f4-19294a2f5dc7",
+    "PermissionCode": "123",
+    "ScheduledJobsDeny": true,
+    "SessionsDeny": false
+ }
+
+###
+POST http://localhost:3001/api/v1/app/test2/unblock
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Infobase": "testdb2",
+  "PermissionCode": "123",
+  "ScheduledJobsDeny": true,
+  "SessionsDeny": true
+}

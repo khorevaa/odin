@@ -1,0 +1,43 @@
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters?force=true
+Accept: application/json
+
+> {% client.global.set("clusterid", response.body.data[0].UUID); %}
+
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/managers
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/services
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/processes
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/infobases
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/locks
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/connections
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/{{app}}/clusters/{{clusterid}}/sessions
+Accept: application/json

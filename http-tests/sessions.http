@@ -1,0 +1,4 @@
+###
+###
+GET http://localhost:3001/api/v1/app/test2/sessions
+Accept: application/json

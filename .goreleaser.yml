@@ -1,0 +1,66 @@
+project_name: odin
+
+env:
+  - GO111MODULE=on
+  - GOPRIVATE=github.com/khorevaa/ras-client
+#  - GOPROXY=https://goproxy.io
+before:
+  hooks:
+    - git config --global url."https://khorevaa:{{ .Env.ACCESS_TOKEN }}@github.com/khorevaa/".insteadOf "https://github.com/khorevaa/"
+    - go mod tidy
+    - go get -u github.com/swaggo/swag/cmd/swag
+    - swag init --parseDependency -g ./main.go
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      #      - 386
+      - amd64
+#      - arm
+#      - arm64
+dist: dist
+
+checksum:
+  name_template: '{{ .ProjectName }}_checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - Merge pull request
+      - Merge branch
+#dockers:
+#  - image_templates:
+#      - 'ghcr.io/khorevaa/{{.ProjectName}}:{{ .Tag }}'
+#      - 'ghcr.io/khorevaa/{{.ProjectName}}:v{{ .Major }}.{{ .Minor }}'
+#      - 'ghcr.io/khorevaa/{{.ProjectName}}:latest'
+#    dockerfile: Dockerfile
+#    binaries:
+#      - unihexp
+#    build_flag_templates:
+#      - "--label=org.label-schema.schema-version=1.0"
+#      - "--label=org.label-schema.version={{.Version}}"
+#      - "--label=org.label-schema.name={{.ProjectName}}"
+#      - "--label=com.github.actions.name={{.ProjectName}}"
+#      - "--label=com.github.actions.description=Universal HEX patch binaries as fast and easily as possible"
+#      - "--label=com.github.actions.icon=terminal"
+#      - "--label=com.github.actions.color=blue"
+#      - "--label=repository=http://github.com/khorevaa/unihexp"
+#      - "--label=homepage=http://github.com/khorevaa/unihexp"
+#      - "--label=maintainer=Aleksey Khorev <khorevaa@gmail.com>"
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip

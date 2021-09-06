@@ -1,0 +1,4357 @@
+basePath: /api/v1
+definitions:
+  AppServer:
+    properties:
+      addr:
+        type: string
+      agent_pwd:
+        type: string
+      agent_usr:
+        type: string
+      agent_version:
+        type: string
+      descr:
+        type: string
+      name:
+        type: string
+      port:
+        type: string
+      properties:
+        additionalProperties:
+          type: string
+        type: object
+      version:
+        type: string
+    type: object
+  Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
+  api.AppServiceStatus:
+    properties:
+      errors:
+        type: string
+      host:
+        type: string
+      name:
+        type: string
+      response_time:
+        type: number
+      status:
+        type: boolean
+      url:
+        type: string
+    type: object
+  api.ReadinessCheckStatus:
+    properties:
+      apps:
+        items:
+          $ref: '#/definitions/api.AppServiceStatus'
+        type: array
+      name:
+        type: string
+      status:
+        type: boolean
+      version:
+        type: string
+    type: object
+  api.StatusResponse:
+    properties:
+      errors:
+        type: string
+      status:
+        type: boolean
+    type: object
+  models.ConnectionSig:
+    properties:
+      cluster_id:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+      infobase_id:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+      process:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+      uuid:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+    type: object
+  models.InfobaseBlocker:
+    properties:
+      cluster_id:
+        example: 80f7f2f6-2feb-46bf-92f4-19294a2f5dc7
+        type: string
+      denied_from:
+        example: "2020-10-01T08:30:00Z"
+        type: string
+      denied_parameter:
+        example: code
+        type: string
+      denied_to:
+        example: "2020-10-01T08:30:00Z"
+        type: string
+      infobase:
+        example: testdb2
+        type: string
+      message:
+        example: Обновление информационной базы
+        type: string
+      permission_code:
+        example: "123"
+        type: string
+      reload:
+        type: boolean
+      scheduled_jobs_deny:
+        type: boolean
+      sessions_deny:
+        type: boolean
+    type: object
+  models.InfobaseUnblocker:
+    properties:
+      cluster_id:
+        example: 80f7f2f6-2feb-46bf-92f4-19294a2f5dc7
+        type: string
+      denied_parameter:
+        type: string
+      infobase:
+        example: testdb2
+        type: string
+      infobase_id:
+        example: 80f7f2f6-2feb-46bf-92f4-19294a2f5dc7
+        type: string
+      permission_code:
+        type: string
+      scheduled_jobs_deny:
+        type: boolean
+      sessions_deny:
+        type: boolean
+    type: object
+  models.TerminateConnectionSig:
+    properties:
+      cluster_id:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+      err:
+        example: error terminate connection
+        type: string
+      infobase_id:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+      process:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+      terminated:
+        example: false
+        type: boolean
+      uuid:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+    type: object
+  models.TerminateConnectionsRequest:
+    properties:
+      connections:
+        items:
+          $ref: '#/definitions/models.ConnectionSig'
+        type: array
+      infobase_id:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e or testib2
+        type: string
+    type: object
+  models.TerminateConnectionsResponse:
+    properties:
+      connections:
+        items:
+          $ref: '#/definitions/models.TerminateConnectionSig'
+        type: array
+      count:
+        example: 0
+        type: integer
+    type: object
+  serialize.ClusterInfo:
+    properties:
+      errors_count_threshold:
+        example: 0
+        type: integer
+      expiration_timeout:
+        example: 0
+        type: integer
+      host:
+        example: host
+        type: string
+      kill_by_memory_with_dump:
+        example: true
+        type: boolean
+      kill_problem_processes:
+        example: true
+        type: boolean
+      life_time_limit:
+        example: 0
+        type: integer
+      lifetime_limit:
+        example: 0
+        type: integer
+      load_balancing_mode:
+        description: performance
+        example: 0
+        type: integer
+      max_memory_size:
+        example: 0
+        type: integer
+      max_memory_time_limit:
+        example: 0
+        type: integer
+      name:
+        example: Новый кластер
+        type: string
+      port:
+        example: 1542
+        type: integer
+      security_level:
+        example: 0
+        type: integer
+      session_fault_tolerance_level:
+        example: 0
+        type: integer
+      uuid:
+        example: 6d6958e1-a96c-4999-a995-698a0298161e
+        type: string
+    type: object
+  serialize.ConnectionShortInfo:
+    properties:
+      application:
+        example: 1CV8
+        type: string
+      blocked_by_ls:
+        example: 0
+        type: integer
+      cluster_id:
+        example: 94232f94-be78-4acd-a11e-09911bd4f4ed
+        type: string
+      conn_id:
+        example: 8714
+        type: integer
+      connected_at:
+        example: 2020-10-01T07:29:57
+        type: string
+      host:
+        example: host
+        type: string
+      infobase_id:
+        example: efa3672f-947a-4d84-bd58-b21997b83561
+        type: string
+      process:
+        example: 94232f94-be78-4acd-a11e-09911bd4f4ed
+        type: string
+      session_id:
+        example: 148542
+        type: integer
+      uuid:
+        example: cd16cde9-6372-4664-ac61-b0ae5cb24478
+        type: string
+    type: object
+  serialize.InfobaseInfo:
+    properties:
+      cluster_id:
+        example: efa3672f-947a-4d84-bd58-b21997b83561
+        type: string
+      date_offset:
+        example: 0
+        type: integer
+      db_name:
+        example: base
+        type: string
+      db_pwd:
+        example: password
+        type: string
+      db_server:
+        example: sql
+        type: string
+      db_user:
+        example: user
+        type: string
+      dbms:
+        example: MSSQLServer
+        type: string
+      denied_from:
+        example: "2020-10-01T08:30:00Z"
+        type: string
+      denied_message:
+        example: Выполняется обновление базы
+        type: string
+      denied_parameter:
+        example: "123"
+        type: string
+      denied_to:
+        example: "2020-10-01T08:30:00Z"
+        type: string
+      descr:
+        example: Это очень хорошая база
+        type: string
+      external_session_manager_connection_string:
+        example: http://auth2.com
+        type: string
+      external_session_manager_required:
+        example: false
+        type: boolean
+      license_distribution:
+        example: 0
+        type: integer
+      locale:
+        example: ru_RU
+        type: string
+      name:
+        example: УППБоеваяБаза
+        type: string
+      permission_code:
+        example: "123"
+        type: string
+      reserve_working_processes:
+        example: false
+        type: boolean
+      safe_mode_security_profile_name:
+        example: profile1
+        type: string
+      scheduled_jobs_deny:
+        example: false
+        type: boolean
+      security_level:
+        example: 0
+        type: integer
+      security_profile_name:
+        example: sec_profile1
+        type: string
+      sessions_deny:
+        example: false
+        type: boolean
+      uuid:
+        example: efa3672f-947a-4d84-bd58-b21997b83561
+        type: string
+    type: object
+  serialize.InfobaseSummaryInfo:
+    properties:
+      cluster_id:
+        type: string
+      descr:
+        example: УППБоеваяБаза
+        type: string
+      name:
+        example: УППБоеваяБаза
+        type: string
+      uuid:
+        example: efa3672f-947a-4d84-bd58-b21997b83561
+        type: string
+    type: object
+  serialize.LicenseInfo:
+    properties:
+      app_id:
+        example: 1CV8
+        type: string
+      full_name:
+        example: FullName
+        type: string
+      full_presentation:
+        example: Сервер, 2300, app, 1541, ORG8A Сетевой 300
+        type: string
+      host:
+        example: host
+        type: string
+      issued_by_server:
+        example: true
+        type: boolean
+      license_type:
+        description: 'license-type       : HASP'
+        example: 0
+        type: integer
+      max_users_all:
+        example: 300
+        type: integer
+      max_users_cur:
+        example: 300
+        type: integer
+      net:
+        example: true
+        type: boolean
+      process_id:
+        example: 94232f94-be78-4acd-a11e-09911bd4f4ed
+        type: string
+      rmngr_address:
+        example: app
+        type: string
+      rmngr_pid:
+        example: "2300"
+        type: string
+      rmngr_port:
+        example: 1541
+        type: integer
+      series:
+        example: ORG8A
+        type: string
+      session_id:
+        example: e45c1c2b-b3ac-4fea-9f0c-0583ad65d117
+        type: string
+      short_presentation:
+        example: Сервер, ORG8A Сет 300
+        type: string
+      user_name:
+        example: User
+        type: string
+    type: object
+  serialize.LockInfo:
+    properties:
+      cluster_id:
+        example: 00000000-0000-0000-0000-000000000000
+        type: string
+      connection_id:
+        example: 00000000-0000-0000-0000-000000000000
+        type: string
+      descr:
+        example: БД(сеанс ,УППБоеваяБаза,разделяемая)
+        type: string
+      infobase_id:
+        example: 8b8a0817-4cb1-4e13-9a8f-472dde1a3b47
+        type: string
+      locked_at:
+        example: 2020-10-01T08:30:00
+        type: string
+      object_id:
+        example: 00000000-0000-0000-0000-000000000000
+        type: string
+      session_id:
+        example: 8b8a0817-4cb1-4e13-9a8f-472dde1a3b47
+        type: string
+    type: object
+  serialize.ManagerInfo:
+    properties:
+      cluster_id:
+        example: 0e588a25-8354-4344-b935-53442312aa30
+        type: string
+      descr:
+        example: Главный менеджер кластера
+        type: string
+      host:
+        example: srv
+        type: string
+      main_manager:
+        example: 1
+        type: integer
+      pid:
+        example: "3366"
+        type: string
+      port:
+        example: 1541
+        type: integer
+      using:
+        example: normal
+        type: string
+      uuid:
+        example: 0e588a25-8354-4344-b935-53442312aa30
+        type: string
+    type: object
+  serialize.ProcessInfo:
+    properties:
+      available_perfomance:
+        example: 100
+        type: integer
+      avg_back_call_time:
+        example: 0
+        type: number
+      avg_call_time:
+        example: 0.483
+        type: number
+      avg_db_call_time:
+        example: 0.124
+        type: number
+      avg_lock_call_time:
+        example: 0
+        type: number
+      avg_server_call_time:
+        example: -0.265
+        type: number
+      avg_threads:
+        example: 0.281
+        type: number
+      capacity:
+        example: 1000
+        type: integer
+      cluster_id:
+        example: 0e588a25-8354-4344-b935-53442312aa30
+        type: string
+      connections:
+        example: 7
+        type: integer
+      enable:
+        example: true
+        type: boolean
+      host:
+        example: srv
+        type: string
+      licenses:
+        items:
+          $ref: '#/definitions/serialize.LicenseInfo'
+        type: array
+      memory_excess_time:
+        example: 0
+        type: integer
+      memory_size:
+        example: 1518604
+        type: integer
+      pid:
+        example: "3366"
+        type: string
+      port:
+        example: 1564
+        type: integer
+      reverse:
+        example: true
+        type: boolean
+      running:
+        example: true
+        type: boolean
+      selection_size:
+        example: 61341
+        type: integer
+      started_at:
+        example: 2018-03-29T11:16:02
+        type: string
+      use:
+        example: true
+        type: boolean
+      uuid:
+        example: 0e588a25-8354-4344-b935-53442312aa30
+        type: string
+    type: object
+  serialize.ServiceInfo:
+    properties:
+      cluster_id:
+        example: 0e588a25-8354-4344-b935-53442312aa30
+        type: string
+      descr:
+        example: Сервис журналов регистрации
+        type: string
+      main_only:
+        example: 0
+        type: integer
+      manager:
+        example:
+        - '[ad2754ad-9415-4689-9559-74dc36b11592]'
+        items:
+          type: string
+        type: array
+      name:
+        example: EventLogService
+        type: string
+    type: object
+  serialize.SessionInfo:
+    properties:
+      app_id:
+        example: Designer
+        type: string
+      blocked_by_dbms:
+        example: 0
+        type: integer
+      blocked_by_ls:
+        example: 0
+        type: integer
+      bytes_all:
+        example: 105972550
+        type: integer
+      bytes_last_5_min:
+        example: 0
+        type: integer
+      calls_all:
+        example: 119052
+        type: integer
+      calls_last_5_min:
+        example: 0
+        type: integer
+      client_ip_address:
+        example: 127.0.0.1
+        type: string
+      cluster_id:
+        example: 0e588a25-8354-4344-b935-53442312aa30
+        type: string
+      connection_id:
+        example: 8adf4514-0379-4333-a153-0b2689edc415
+        type: string
+      cpu_time_current:
+        example: 0
+        type: integer
+      cpu_time_last_5_min:
+        example: 280
+        type: integer
+      cpu_time_total:
+        example: 6832
+        type: integer
+      current_service_name:
+        example: name
+        type: string
+      data_separation:
+        example: sep=1
+        type: string
+      db_proc_info:
+        example: DbProcInfo
+        type: string
+      db_proc_took:
+        example: 0
+        type: integer
+      db_proc_took_at:
+        example: 2018-04-09T14:51:31
+        type: string
+      dbms_bytes_all:
+        example: 317824922
+        type: integer
+      dbms_bytes_last_5_min:
+        example: 0
+        type: integer
+      duration_all:
+        example: 66184
+        type: integer
+      duration_all_dbms:
+        example: 43242
+        type: integer
+      duration_all_service:
+        example: 515
+        type: integer
+      duration_current:
+        example: 0
+        type: integer
+      duration_current_dbms:
+        example: 0
+        type: integer
+      duration_current_service:
+        example: 0
+        type: integer
+      duration_last_5_min:
+        example: 0
+        type: integer
+      duration_last_5_min_dbms:
+        example: 0
+        type: integer
+      duration_last_5_min_service:
+        example: 30
+        type: integer
+      hibernate:
+        example: true
+        type: boolean
+      hibernate_dession_terminate_time:
+        example: 86400
+        type: integer
+      host:
+        example: host
+        type: string
+      id:
+        example: 12
+        type: integer
+      infobase_id:
+        example: aea71760-15b3-485a-9a35-506eb8a0b04a
+        type: string
+      last_active_at:
+        example: 2018-04-09T14:51:31
+        type: string
+      licenses:
+        items:
+          $ref: '#/definitions/serialize.LicenseInfo'
+        type: array
+      locale:
+        example: ru_RU
+        type: string
+      memory_current:
+        example: 0
+        type: integer
+      memory_last_5_min:
+        example: 416379
+        type: integer
+      memory_total:
+        example: 23178863
+        type: integer
+      passive_session_hibernate_time:
+        example: 1200
+        type: integer
+      process_id:
+        example: 1af2e54f-d95a-4370-9b45-8277280cad23
+        type: string
+      read_current:
+        example: 156162
+        type: integer
+      read_last_5_min:
+        example: 156162
+        type: integer
+      read_total:
+        example: 15616
+        type: integer
+      started_at:
+        example: 2018-04-09T14:51:31
+        type: string
+      user_name:
+        example: АКузнецов
+        type: string
+      uuid:
+        example: 1fb5f037-99e8-4924-a99d-a9e687522d32
+        type: string
+      write_current:
+        example: 0
+        type: integer
+      write_last_5_min:
+        example: 123
+        type: integer
+      write_total:
+        example: 1071457
+        type: integer
+    type: object
+  serialize.UserInfo:
+    properties:
+      descr:
+        example: дополнительное описание
+        type: string
+      name:
+        example: admin
+        type: string
+      password:
+        type: string
+      password_auth_allowed:
+        type: boolean
+      sys_auth_allowed:
+        type: boolean
+      sys_user_name:
+        type: string
+    type: object
+host: localhost:3001
+info:
+  contact:
+    email: khorevaa@yandex.ru
+    name: API Support
+  description: ODIN Swagger UI
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 'Odin: Remote Administration for 1S.Enterprise Application Servers'
+  version: "1.0"
+paths:
+  /app:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка зарегистрированных серверов 1С.Предприятие
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/AppServer'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Получение списка зарегистрированных серверов 1С.Предприятие
+      tags:
+      - app
+    post:
+      consumes:
+      - application/json
+      description: выполняет регистрацию сервера 1С.Предприятие в приложении
+      parameters:
+      - description: app info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/AppServer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/AppServer'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: выполняет регистрацию сервера 1С.Предприятие в приложении
+      tags:
+      - app
+  /app/{app}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление информации о регистрации сервера приложений 1С.Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Удаление информации о регистрации сервера приложений 1С.Предприятие
+      tags:
+      - app
+    get:
+      consumes:
+      - application/json
+      description: Получение информации о зарегистрированном сервере 1С.Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/AppServer'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Получение информации о зарегистрированном сервере 1С.Предприятие
+      tags:
+      - app
+    post:
+      consumes:
+      - application/json
+      description: Обновление информации о зарегистрированном сервере 1С.Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: app info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/AppServer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/AppServer'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Обновление информации о зарегистрированном сервере 1С.Предприятие
+      tags:
+      - app
+  /app/{app}/agent/admins:
+    get:
+      consumes:
+      - application/json
+      description: получение списка администраторов агента на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.UserInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка администраторов агента на сервере 1С Предприятие
+      tags:
+      - admins
+      - agent
+    post:
+      consumes:
+      - application/json
+      description: выполняет регистрацию нового адмнимистратор на агенте сервера 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: user info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/serialize.UserInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.UserInfo'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: выполняет регистрацию нового адмнимистратор на агенте сервера 1С Предприятиеи
+      tags:
+      - admins
+      - agent
+  /app/{app}/agent/admins/{admin}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление администратора агента на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: admin name
+        in: path
+        name: admin
+        required: true
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Удаление администратора агента на сервере 1С Предприятие
+      tags:
+      - admins
+      - agent
+  /app/{app}/agent/version:
+    get:
+      consumes:
+      - application/json
+      description: получение версии агента на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение версии агента на сервере 1С Предприятие
+      tags:
+      - agent
+  /app/{app}/block:
+    get:
+      consumes:
+      - application/json
+      description: Установка блокировки на произвольную информационную базу на сервер 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: query
+        name: infobase-id
+        required: true
+        type: string
+      - description: session deny
+        in: query
+        name: sessions-deny
+        required: true
+        type: string
+      - description: message to user
+        in: query
+        name: message
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: denied parameter
+        in: query
+        name: denied-parameter
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: scheduled jobs deny
+        in: query
+        name: scheduled-jobs-deny
+        type: boolean
+      - default: '"now"'
+        description: denied from time
+        in: query
+        name: denied-from
+        type: string
+      - description: denied to time
+        in: query
+        name: denied-to
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки на произвольную информационную базу на сервер 1С Предприятие
+      tags:
+      - blocker
+    post:
+      consumes:
+      - application/json
+      description: Установка блокировки на произвольную информационную базу на сервер 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: block info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.InfobaseBlocker'
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки на произвольную информационную базу на сервер 1С Предприятие
+      tags:
+      - blocker
+  /app/{app}/cluster/{cluster}/admins:
+    get:
+      consumes:
+      - application/json
+      description: получение списка администраторов кластера
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.UserInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка администраторов кластера
+      tags:
+      - admins
+      - clusters
+    post:
+      consumes:
+      - application/json
+      description: выполняет регистрацию нового администратор на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: user info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/serialize.UserInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.UserInfo'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: выполняет регистрацию нового администратор на кластере
+      tags:
+      - admins
+      - clusters
+  /app/{app}/cluster/{cluster}/admins/{admin}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление администратора агента на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: admin name
+        in: path
+        name: admin
+        required: true
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Удаление администратора агента на кластере
+      tags:
+      - admins
+      - clusters
+  /app/{app}/clusters:
+    get:
+      consumes:
+      - application/json
+      description: получение списка кластеров на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ClusterInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка кластеров на сервере 1С Предприятие
+      tags:
+      - clusters
+  /app/{app}/clusters/{cluster}:
+    get:
+      consumes:
+      - application/json
+      description: получение информации о кластере на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.ClusterInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение информации о кластере на сервере 1С Предприятие
+      tags:
+      - clusters
+  /app/{app}/clusters/{cluster}/block:
+    get:
+      consumes:
+      - application/json
+      description: установка блокировки на информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: query
+        name: infobase
+        required: true
+        type: string
+      - description: session deny
+        in: query
+        name: sessions-deny
+        required: true
+        type: string
+      - description: message to user
+        in: query
+        name: message
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: denied parameter
+        in: query
+        name: denied-parameter
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: scheduled jobs deny
+        in: query
+        name: scheduled-jobs-deny
+        type: boolean
+      - description: denied from time
+        in: query
+        name: denied-from
+        type: string
+      - description: denied to time
+        in: query
+        name: denied-to
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки на информационную базу на кластере
+      tags:
+      - blocker
+    post:
+      consumes:
+      - application/json
+      description: установка блокировки на информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: block info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.InfobaseBlocker'
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки на информационную базу на кластере
+      tags:
+      - blocker
+  /app/{app}/clusters/{cluster}/connections:
+    get:
+      consumes:
+      - application/json
+      description: пполучение списка подключений на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ConnectionShortInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка подключений на кластере
+      tags:
+      - connections
+  /app/{app}/clusters/{cluster}/connections/{connection}.{process}:
+    delete:
+      consumes:
+      - application/json
+      description: отключение подключения на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: connection uuid
+        in: path
+        name: connection
+        required: true
+        type: string
+      - description: process uuid
+        in: path
+        name: process
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.TerminateConnectionSig'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: отключение подключения на кластере
+      tags:
+      - connections
+  /app/{app}/clusters/{cluster}/connections/terminate:
+    post:
+      consumes:
+      - application/json
+      description: отключение списка подключений или по информационной базе на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.TerminateConnectionsRequest'
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.TerminateConnectionsResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: отключение списка подключений на кластере
+      tags:
+      - connections
+  /app/{app}/clusters/{cluster}/infobases:
+    get:
+      consumes:
+      - application/json
+      description: получение списка информационных баз с кластера
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.InfobaseSummaryInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка информационных баз с кластера
+      tags:
+      - infobases
+    post:
+      consumes:
+      - application/json
+      description: оздание информационной базы на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: create server db
+        in: query
+        name: create-db
+        type: boolean
+      - description: new info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/serialize.InfobaseInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: оздание информационной базы на кластере
+      tags:
+      - infobases
+  /app/{app}/clusters/{cluster}/infobases/{infobase}:
+    delete:
+      consumes:
+      - application/json
+      description: удаляет информационную базу с сервера кластера
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: delete server db
+        in: query
+        name: delete-db
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: удаляет информационную базу с сервера кластера
+      tags:
+      - infobases
+    get:
+      consumes:
+      - application/json
+      description: получение информации об информационной базе с кластера
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: получение информации об информационной базе с кластера
+      tags:
+      - infobases
+    post:
+      consumes:
+      - application/json
+      description: побновление информации об информационной базе на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      - description: new info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/serialize.InfobaseInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: обновление информации об информационной базе на кластере
+      tags:
+      - infobases
+  /app/{app}/clusters/{cluster}/infobases/{infobase}/block:
+    get:
+      consumes:
+      - application/json
+      description: Установка блокировки на выбранную информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: session deny
+        in: query
+        name: sessions-deny
+        required: true
+        type: string
+      - description: message to user
+        in: query
+        name: message
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: denied parameter
+        in: query
+        name: denied-parameter
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: scheduled jobs deny
+        in: query
+        name: scheduled-jobs-deny
+        type: boolean
+      - description: denied from time
+        in: query
+        name: denied-from
+        type: string
+      - description: denied to time
+        in: query
+        name: denied-to
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки на выбранную информационную базу на кластере
+      tags:
+      - blocker
+    post:
+      consumes:
+      - application/json
+      description: установка блокировки на конкретную информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: block info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.InfobaseBlocker'
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки на конкретную информационную базу на кластере
+      tags:
+      - blocker
+  /app/{app}/clusters/{cluster}/infobases/{infobase}/connections:
+    get:
+      consumes:
+      - application/json
+      description: получение списка подключений для информационной базы на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ConnectionShortInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка подключений для информационной базы на кластере
+      tags:
+      - connections
+  /app/{app}/clusters/{cluster}/infobases/{infobase}/locks:
+    get:
+      consumes:
+      - application/json
+      description: получение списка блокировок для информационной базы на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.LockInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка блокировок для информационной базы на кластере
+      tags:
+      - locks
+  /app/{app}/clusters/{cluster}/infobases/{infobase}/sessions:
+    get:
+      consumes:
+      - application/json
+      description: получение списка сессий информационной базы на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.SessionInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка сессий информационной базы на кластере
+      tags:
+      - sessions
+  /app/{app}/clusters/{cluster}/licenses:
+    get:
+      consumes:
+      - application/json
+      description: получение списка лицензий на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.LicenseInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка лицензий на кластере
+      tags:
+      - licenses
+  /app/{app}/clusters/{cluster}/locks:
+    get:
+      consumes:
+      - application/json
+      description: получение списка блокировок на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.LockInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка блокировок на кластере
+      tags:
+      - locks
+  /app/{app}/clusters/{cluster}/managers:
+    get:
+      consumes:
+      - application/json
+      description: получение списка менеджеров на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ManagerInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка менеджеров на кластере
+      tags:
+      - managers
+  /app/{app}/clusters/{cluster}/processes:
+    get:
+      consumes:
+      - application/json
+      description: получение списка процессов на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ProcessInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка процессов на кластере
+      tags:
+      - processes
+  /app/{app}/clusters/{cluster}/processes/{process}:
+    get:
+      consumes:
+      - application/json
+      description: получение информации опроцессе на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: uuid process
+        in: path
+        name: process
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.ProcessInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение информации опроцессе на кластере
+      tags:
+      - processes
+  /app/{app}/clusters/{cluster}/services:
+    get:
+      consumes:
+      - application/json
+      description: получение списка сервисов на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ServiceInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка сервисов на кластере
+      tags:
+      - services
+  /app/{app}/clusters/{cluster}/sessions:
+    get:
+      consumes:
+      - application/json
+      description: получение списка сессий на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.SessionInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка сессий на кластере
+      tags:
+      - sessions
+  /app/{app}/clusters/{cluster}/sessions/{session}:
+    delete:
+      consumes:
+      - application/json
+      description: отключение сессии на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: session uuid
+        in: path
+        name: session
+        required: true
+        type: string
+      - description: message to user
+        in: query
+        name: msg
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: отключение сессии на кластере
+      tags:
+      - sessions
+  /app/{app}/clusters/{cluster}/unblock:
+    get:
+      consumes:
+      - application/json
+      description: Снятие блокировки на информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: query
+        name: infobase
+        required: true
+        type: string
+      - description: session deny
+        in: query
+        name: sessions-deny
+        required: true
+        type: string
+      - description: denied parameter
+        in: query
+        name: denied-parameter
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: scheduled jobs deny
+        in: query
+        name: scheduled-jobs-deny
+        type: boolean
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseSummaryInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Снятие блокировки на информационную базу на кластере
+      tags:
+      - blocker
+    post:
+      consumes:
+      - application/json
+      description: Снимает блокировку на информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: path
+        name: cluster
+        required: true
+        type: string
+      - description: unblock info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.InfobaseUnblocker'
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseSummaryInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Снимает блокировку на информационную базу на кластере
+      tags:
+      - blocker
+  /app/{app}/connections:
+    get:
+      consumes:
+      - application/json
+      description: получение списка подключений на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ConnectionShortInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка подключений на сервере 1С Предприятие
+      tags:
+      - connections
+  /app/{app}/connections/{connection}.{process}:
+    delete:
+      consumes:
+      - application/json
+      description: отключение подключения на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: connection uuid
+        in: path
+        name: connection
+        required: true
+        type: string
+      - description: process uuid
+        in: path
+        name: process
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.TerminateConnectionSig'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: отключение подключения на сервере 1С Предприятие
+      tags:
+      - connections
+  /app/{app}/connections/terminate:
+    post:
+      consumes:
+      - application/json
+      description: отключение списка подключений или по информационной базе на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.TerminateConnectionsRequest'
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.TerminateConnectionsResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: отключение списка подключений на сервере 1С Предприятие
+      tags:
+      - connections
+  /app/{app}/health:
+    get:
+      consumes:
+      - application/json
+      description: запрос о состонии сервера приложений 1С Предприятие
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.StatusResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.StatusResponse'
+      summary: запрос о состонии сервера приложений 1С Предприятие
+      tags:
+      - app
+  /app/{app}/infobases:
+    get:
+      consumes:
+      - application/json
+      description: получение списка информационных баз с сервера 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.InfobaseSummaryInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка информационных баз с сервера 1С Предприятие
+      tags:
+      - infobases
+    post:
+      consumes:
+      - application/json
+      description: создание информационной базы на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: create server db
+        in: query
+        name: create-db
+        type: boolean
+      - description: new info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/serialize.InfobaseInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: создание информационной базы на сервере 1С Предприятие
+      tags:
+      - infobases
+  /app/{app}/infobases/{infobase}:
+    delete:
+      consumes:
+      - application/json
+      description: удаляет информационную базу с сервера 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: delete server db
+        in: query
+        name: delete-db
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: удаляет информационную базу с сервера 1С Предприятие
+      tags:
+      - infobases
+    get:
+      consumes:
+      - application/json
+      description: получение информации об информационной базе с сервера 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: получение информации об информационной базе с сервера 1С Предприятие
+      tags:
+      - infobases
+    post:
+      consumes:
+      - application/json
+      description: обновление информации об информационной базе на сервера 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      - description: new info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/serialize.InfobaseInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: обновление информации об информационной базе на сервера 1С Предприятие
+      tags:
+      - infobases
+  /app/{app}/infobases/{infobase}/block:
+    get:
+      consumes:
+      - application/json
+      description: Установка блокировки конкретную на информационную базу на сервер 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: session deny
+        in: query
+        name: sessions-deny
+        required: true
+        type: string
+      - description: message to user
+        in: query
+        name: message
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: denied parameter
+        in: query
+        name: denied-parameter
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: scheduled jobs deny
+        in: query
+        name: scheduled-jobs-deny
+        type: boolean
+      - description: denied from time
+        in: query
+        name: denied-from
+        type: string
+      - description: denied to time
+        in: query
+        name: denied-to
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки конкретную на информационную базу на сервер 1С Предприятие
+      tags:
+      - blocker
+    post:
+      consumes:
+      - application/json
+      description: Установка блокировки конкретную на информационную базу на сервер 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: block info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.InfobaseBlocker'
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.InfobaseUnblocker'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Установка блокировки конкретную на информационную базу на сервер 1С Предприятие
+      tags:
+      - blocker
+  /app/{app}/infobases/{infobase}/connections:
+    get:
+      consumes:
+      - application/json
+      description: получение списка подключений для информационной базы на сервер 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ConnectionShortInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка подключений для информационной базы на сервер 1С Предприятие
+      tags:
+      - connections
+  /app/{app}/infobases/{infobase}/locks:
+    get:
+      consumes:
+      - application/json
+      description: получение списка блокировок для информационной базы на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase name or uuid
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.LockInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: пполучение списка блокировок для информационной базы на сервере 1С Предприятие
+      tags:
+      - locks
+  /app/{app}/infobases/{infobase}/sessions:
+    get:
+      consumes:
+      - application/json
+      description: получение списка сессий информационной базы на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: path
+        name: infobase
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.SessionInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка сессий информационной базы на сервере 1С Предприятие
+      tags:
+      - sessions
+  /app/{app}/licenses:
+    get:
+      consumes:
+      - application/json
+      description: получение списка лицензий на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.LicenseInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка лицензий на сервере 1С Предприятие
+      tags:
+      - licenses
+  /app/{app}/locks:
+    get:
+      consumes:
+      - application/json
+      description: получение списка блокировок на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.LockInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка блокировок на сервере 1С Предприятие
+      tags:
+      - locks
+  /app/{app}/managers:
+    get:
+      consumes:
+      - application/json
+      description: получение списка менеджеров на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ManagerInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка менеджеров на сервере 1С Предприятие
+      tags:
+      - managers
+  /app/{app}/processes:
+    get:
+      consumes:
+      - application/json
+      description: получение списка процессов на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ProcessInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка процессов на сервере 1С Предприятие
+      tags:
+      - processes
+  /app/{app}/processes/{process}:
+    get:
+      consumes:
+      - application/json
+      description: получение информации опроцессе на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: uuid process
+        in: path
+        name: process
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.ProcessInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение информации опроцессе на сервере 1С Предприятие
+      tags:
+      - processes
+  /app/{app}/services:
+    get:
+      consumes:
+      - application/json
+      description: получение списка сервисов на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        required: true
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.ServiceInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка сервисов на сервере 1С Предприятие
+      tags:
+      - services
+  /app/{app}/sessions:
+    get:
+      consumes:
+      - application/json
+      description: получение списка сессий  на сервере 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/serialize.SessionInfo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: получение списка сессий на сервере 1С Предприятие
+      tags:
+      - sessions
+  /app/{app}/sessions/{session}:
+    delete:
+      consumes:
+      - application/json
+      description: отключение сессии на сервер 1С Предприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: session uuid
+        in: path
+        name: session
+        required: true
+        type: string
+      - description: message to user
+        in: query
+        name: msg
+        type: string
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: отключение сессии на сервер 1С Предприятие
+      tags:
+      - sessions
+  /app/{app}/unblock:
+    get:
+      consumes:
+      - application/json
+      description: Снятие блокировки на информационную базу на кластере
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: infobase uuid or name
+        in: query
+        name: infobase
+        required: true
+        type: string
+      - description: session deny
+        in: query
+        name: sessions-deny
+        required: true
+        type: string
+      - description: denied parameter
+        in: query
+        name: denied-parameter
+        type: string
+      - description: permission code
+        in: query
+        name: permission-code
+        type: string
+      - description: scheduled jobs deny
+        in: query
+        name: scheduled-jobs-deny
+        type: boolean
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseSummaryInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Снятие блокировки на информационную базу на кластере
+      tags:
+      - blocker
+    post:
+      consumes:
+      - application/json
+      description: Снимает блокировку на информационную базу на сервере 1С Прдприятие
+      parameters:
+      - description: app name
+        in: path
+        name: app
+        required: true
+        type: string
+      - description: unblock info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.InfobaseUnblocker'
+      - description: cluster uuid
+        in: query
+        name: cluster-id
+        type: string
+      - description: cluster user
+        in: query
+        name: cluster-usr
+        type: string
+      - description: cluster password
+        in: query
+        name: cluster-pwd
+        type: string
+      - description: infobase user
+        in: query
+        name: infobase-usr
+        type: string
+      - description: infobase password
+        in: query
+        name: infobase-pwd
+        type: string
+      - description: force update ignore cache
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/serialize.InfobaseSummaryInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Снимает блокировку на информационную базу на сервере 1С Прдприятие
+      tags:
+      - blocker
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: запрос о состонии приложения
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.StatusResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.StatusResponse'
+      summary: запрос о состонии приложения
+      tags:
+      - health
+  /health/readiness:
+    get:
+      consumes:
+      - application/json
+      description: запрос подробного состония приложения
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ReadinessCheckStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ReadinessCheckStatus'
+      summary: запрос подробного состония приложения
+      tags:
+      - health
+securityDefinitions:
+  OAuth2Application:
+    flow: application
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      metrics: ' Grants read access and control metrics operations'
+      read: ' Grants read access'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+swagger: "2.0"

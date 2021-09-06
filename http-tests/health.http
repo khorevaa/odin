@@ -1,0 +1,6 @@
+GET http://localhost:3001/api/v1/health/readiness
+Accept: application/json
+
+###
+
+

@@ -1,0 +1,90 @@
+POST http://localhost:3001/api/v1/app/test/infobases?create-db=true
+Content-Type: application/json
+
+{
+    "uuid": "94f8e2d6-8033-4c04-8391-1ba10a36a439",
+    "name": "testdb{{$randomInt}}",
+    "descr": "",
+    "dbms": "PostgreSQL",
+    "db_server": "db",
+    "db_name": "testdb{{$randomInt}}",
+    "db_user": "postgres",
+    "db_pwd": "�",
+    "security_level": 0,
+    "license_distribution": 0,
+    "scheduled_jobs_deny": false,
+    "sessions_deny": false,
+    "denied_from": "0001-01-01T00:00:00Z",
+    "denied_message": "",
+    "denied_parameter": "",
+    "denied_to": "0001-01-01T00:00:00Z",
+    "permission_code": "",
+    "external_session_manager_connection_string": "",
+    "external_session_manager_required": false,
+    "security_profile_name": "",
+    "safe_mode_security_profile_name": "",
+    "reserve_working_processes": false,
+    "date_offset": 0,
+    "locale": "RU_ru",
+    "cluster_id": "dd5b5b35-fb5b-49fd-aee4-997715933d25"
+  }
+
+> {% client.global.set("infobase_name", response.body.data.Name); %}
+
+
+###
+###
+POST http://localhost:3001/api/v1/app/test2/infobases/{{infobase_name}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "dateOffset": 0,
+  "dbName": "testdb{{$randomInt}}",
+  "dbPwd": "",
+  "dbServer": "db",
+  "dbUser": "postgres",
+  "dbms": "PostgreSQL",
+  "deniedMessage": "",
+  "deniedParameter": "",
+  "description": "string",
+  "externalSessionManagerConnectionDtring": "",
+  "externalSessionManagerRequired": false,
+  "licenseDistribution": 0,
+  "locale": "RU_ru",
+  "name": "testdb{{$randomInt}}",
+  "permissionCode": "",
+  "reserveWorkingProcesses": false,
+  "safeModeSecurityProfileName": "",
+  "scheduledJobsDeny": true,
+  "securityLevel": 0,
+  "securityProfileName": "",
+  "sessionsDeny": false
+}
+
+
+###
+###
+DELETE http://localhost:3001/api/v1/app/test2/infobases/testdb641?delete-db=true
+Accept: application/json
+
+###
+###
+GET http://localhost:3001/api/v1/app/test/infobases
+Accept: application/json
+
+###
+###
+POST http://localhost:3001/api/v1/app/test/infobases?create-db=true
+Content-Type: application/json
+
+{
+    "uuid": "94f8e2d6-8033-4c04-8391-1ba10a36a439",
+    "name": "testdb{{$randomInt}}",
+    "descr": "",
+    "dbms": "PostgreSQL",
+    "security_level": 0,
+    "license_distribution": 0,
+    "scheduled_jobs_deny": false
+
+  }
