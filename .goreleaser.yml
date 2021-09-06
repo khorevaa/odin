@@ -2,11 +2,9 @@ project_name: odin
 
 env:
   - GO111MODULE=on
-  - GOPRIVATE=github.com/khorevaa/ras-client
 #  - GOPROXY=https://goproxy.io
 before:
   hooks:
-    - git config --global url."https://khorevaa:{{ .Env.ACCESS_TOKEN }}@github.com/khorevaa/".insteadOf "https://github.com/khorevaa/"
     - go mod tidy
     - go get -u github.com/swaggo/swag/cmd/swag
     - swag init --parseDependency -g ./main.go
