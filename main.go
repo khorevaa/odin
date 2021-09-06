@@ -79,7 +79,7 @@ func main() {
 
 	app.BoolOptPtr(&debug, "debug", false, "Enable debug")
 	app.BoolOptPtr(&prefork, "prefork", false, "Enable prefork in Production")
-	app.StringOptPtr(&port, "port p", "localhost:3001", "Port to listen on")
+	app.StringOptPtr(&port, "port p", ":3001", "Port to listen on")
 	app.StringOptPtr(&appData, "dir", "", "App data dir")
 	app.StringOptPtr(&preConfigureAppServersFile, "config c", "", "File to load preconfigure app servers")
 
