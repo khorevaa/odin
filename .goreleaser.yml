@@ -41,8 +41,8 @@ dockers:
       - 'ghcr.io/khorevaa/{{.ProjectName}}:v{{ .Major }}.{{ .Minor }}'
       - 'ghcr.io/khorevaa/{{.ProjectName}}:latest'
     dockerfile: Dockerfile
-    binaries:
-      - unihexp
+    ids:
+      - odin
     build_flag_templates:
       - "--label=org.label-schema.schema-version=1.0"
       - "--label=org.label-schema.version={{.Version}}"
